@@ -1,0 +1,8 @@
+.items_item{
+    cursor: pointer;
+    transition:"0.5s";
+}
+.items_item:hover{
+    color: red;
+    font-weight: 500;
+}
