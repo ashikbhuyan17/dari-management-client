@@ -12,7 +12,17 @@ import { getAccessToken } from "../../../HTTP/token";
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import EditCategoryModal from "../Components/Sub-Components/EditCategoryModal";
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 const MySwal = withReactContent(Swal)
+
 const ProductCategories = () => {
 
 
@@ -29,34 +39,36 @@ const ProductCategories = () => {
 
       var arr = [
       ]
-      var result = response.data.categoryList.map(person => (arr.push({ label: person.name, value: person.slug })));
+      var result = response.data.categoryList.map(person => (arr.push({ label: person.name, value: person.slug, id: person._id })));
       setProductCategoryList(arr)
 
     }
   }
+
+
+
+  const deleteProductCategoryList = async (id) => {
+    console.log(id)
+    const response = await axios.delete(`http://localhost:5000/api/category/deleteCategory/${id}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+    console.log("getProductCategoryList", response)
+    if (response.status === 200) {
+      closeAddCategoryModal();
+      MySwal.fire({
+        icon: 'success',
+        title: 'Delete Success...',
+        // text: `${response.name}`,
+      });
+      setCategory("");
+      // setDescription("");
+      getProductCategoryList();
+    }
+  }
+
+
   useEffect(() => {
     getProductCategoryList();
   }, [])
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 120 },
-    {
-      field: 'name',
-      headerName: 'Category',
-      width: 180,
-      editable: true,
-    },
-    {
-      field: 'description',
-      headerName: 'Description',
-      width: 190,
-      editable: true,
-    }
-  ];
-  const onSelect = (event) => {
-    const { data } = event;
-    const { id } = data;
-    setSelectedId(id);
-  }
+
   const [selectedId, setSelectedId] = useState();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -78,6 +90,7 @@ const ProductCategories = () => {
   const [description, setDescription] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
   const postCategory = useCallback(async () => {
     if (category === "") {
       setError(true);
@@ -87,7 +100,6 @@ const ProductCategories = () => {
       setError(false);
       const data = {
         name: category,
-        // description: description
       }
       const response = await axios.post(`http://localhost:5000/api/category/create`, data, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
       if (response.status === 201) {
@@ -103,181 +115,151 @@ const ProductCategories = () => {
       }
     }
   }, [category, description])
-  const [editCategoryOpenModal, setEditCategoryOpenModal] = useState(false);
-  const openEditCategoryModal = () => {
-    setEditCategoryOpenModal(true);
-  }
-  const closeEditCategoryModal = () => {
-    setEditCategoryOpenModal(false);
-  }
-  const [editCategory, setEditCategory] = useState("");
-  const [editDescription, setEditDescription] = useState("");
-  const getCategory = async () => {
-    if (!selectedId) {
-      MySwal.fire({
-        icon: 'success',
-        title: 'Great...',
-        text: `Please Select an item`,
-      });
-    }
-    else {
-      handleMenuClose();
-      const response = await axios.get(`${getUrl()}/category/${selectedId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
-      if (response.status === 200) {
-        const { data } = response;
-        setEditDescription(data.description);
-        setEditCategory(data.name);
-        openEditCategoryModal();
-      }
-    }
-  }
-  const updateCategory = useCallback(async () => {
-    const data = {
-      name: editCategory,
-      description: editDescription
-    }
-    const response = await axios.patch(`${getUrl()}/category/${selectedId}`, data, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
-    if (response.status === 200) {
-      closeEditCategoryModal();
-      MySwal.fire({
-        icon: 'success',
-        title: 'Great...',
-        text: `${response.data}`,
-      });
-      getProductCategoryList();
-    }
-  }, [selectedId, editCategory, editDescription])
-  const removeCategory = async () => {
-    handleMenuClose();
-    MySwal.fire({
-      title: 'Do you want to remove?',
-      showCancelButton: true,
-      confirmButtonText: 'Remove',
-      cancelButtonText: `Keep`,
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        const response = await axios.delete(`${getUrl()}/category/${selectedId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
 
-        if (response.status === 200) {
-          MySwal.fire({
-            icon: 'success',
-            title: 'Great...',
-            text: `${response.data}`,
-          });
-          getProductCategoryList();
-        }
-      } else if (result.isDenied) { }
-    })
-  }
+
+  // const [editCategoryOpenModal, setEditCategoryOpenModal] = useState(false);
+  // const openEditCategoryModal = () => {
+  //   setEditCategoryOpenModal(true);
+  // }
+  // const closeEditCategoryModal = () => {
+  //   setEditCategoryOpenModal(false);
+  // }
+  // const [editCategory, setEditCategory] = useState("");
+  // const [editDescription, setEditDescription] = useState("");
+  // const getCategory = async () => {
+  //   if (!selectedId) {
+  //     MySwal.fire({
+  //       icon: 'success',
+  //       title: 'Great...',
+  //       text: `Please Select an item`,
+  //     });
+  //   }
+  //   else {
+  //     handleMenuClose();
+  //     const response = await axios.get(`${getUrl()}/category/${selectedId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+  //     if (response.status === 200) {
+  //       const { data } = response;
+  //       setEditDescription(data.description);
+  //       setEditCategory(data.name);
+  //       openEditCategoryModal();
+  //     }
+  //   }
+  // }
+
+
+  // updateCategory
+
+  // const updateCategory = useCallback(async () => {
+  //   const data = {
+  //     name: editCategory,
+  //     description: editDescription
+  //   }
+  //   const response = await axios.patch(`${getUrl()}/category/${selectedId}`, data, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+  //   if (response.status === 200) {
+  //     closeEditCategoryModal();
+  //     MySwal.fire({
+  //       icon: 'success',
+  //       title: 'Great...',
+  //       text: `${response.data}`,
+  //     });
+  //     getProductCategoryList();
+  //   }
+  // }, [selectedId, editCategory, editDescription])
+
+
+  // removeCategory
+
+  // const removeCategory = async () => {
+  //   handleMenuClose();
+  //   MySwal.fire({
+  //     title: 'Do you want to remove?',
+  //     showCancelButton: true,
+  //     confirmButtonText: 'Remove',
+  //     cancelButtonText: `Keep`,
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       const response = await axios.delete(`${getUrl()}/category/${selectedId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+
+  //       if (response.status === 200) {
+  //         MySwal.fire({
+  //           icon: 'success',
+  //           title: 'Great...',
+  //           text: `${response.data}`,
+  //         });
+  //         getProductCategoryList();
+  //       }
+  //     } else if (result.isDenied) { }
+  //   })
+  // }
+
   return (
-    <Grid
-      container
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-      spacing="1">
+    <>
       <Grid
-        style={{ marginBottom: "15px" }}
-        item
-        lg={12} md={12}>
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing="1">
         <Grid
-          container
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="center">
-          <Grid item lg={6} md={6}>
-            <h2>Product Categories</h2>
+          style={{ marginBottom: "15px" }}
+          item
+          lg={12} md={12}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="center">
+            <Grid item lg={6} md={6}>
+              <h2>Product Categories</h2>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          spacing="2">
-          <Grid item lg={3} md={3}>
-            <Button
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              fullWidth
-              color="success"
-              variant="contained"
-              startIcon={<EditIcon />}
-            >
-              Actions
-            </Button>
-            <Menu
-              // style={{ width: "550px" }}
-              id="dd-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-              anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-              transformOrigin={{ horizontal: "left", vertical: "top" }}
-            >
-              <MenuItem onClick={getCategory}>Edit</MenuItem>
-              <MenuItem onClick={removeCategory}>Delete</MenuItem>
-              {/* edit product category modal */}
+          <Grid
+            container
+            direction="row"
+            spacing="2">
+            <Grid item lg={3} md={3}>
+              <Button
+                onClick={openAddCategoryModal}
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                color="success"
+                fullWidth
+                variant="contained"
+                startIcon={<AddBoxIcon />}
+              >
+                Add
+              </Button>
+
+              {/* add product variation modal */}
               <Modal
-                open={editCategoryOpenModal}
-                onClose={closeEditCategoryModal}
+                open={addCategoryOpenModal}
+                onClose={closeAddCategoryModal}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
               >
-                <EditCategoryModal
-                  category={editCategory}
-                  setCategory={setEditCategory}
-                  description={editDescription}
-                  setDescription={setEditDescription}
-                  save={updateCategory}
-                  closeModal={closeEditCategoryModal} />
+                <AddCategoryModal
+                  isError={error}
+                  errorMessage={errorMessage}
+                  category={category}
+                  setCategory={setCategory}
+                  descripton={description}
+                  setDescription={setDescription}
+                  save={postCategory}
+                  closeModal={closeAddCategoryModal} />
               </Modal>
-            </Menu>
-
-          </Grid>
-          <Grid item lg={3} md={3}>
-            <Button
-              onClick={openAddCategoryModal}
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              color="success"
-              fullWidth
-              variant="contained"
-              startIcon={<AddBoxIcon />}
-            >
-              Add
-            </Button>
-
-            {/* add product variation modal */}
-            <Modal
-              open={addCategoryOpenModal}
-              onClose={closeAddCategoryModal}
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
-            >
-              <AddCategoryModal
-                isError={error}
-                errorMessage={errorMessage}
-                category={category}
-                setCategory={setCategory}
-                descripton={description}
-                setDescription={setDescription}
-                save={postCategory}
-                closeModal={closeAddCategoryModal} />
-            </Modal>
-          </Grid>
-          <Grid item lg={6} md={6}>
-            <Autocomplete
-              id="free-solo-demo"
-              freeSolo
-              // options={productCategoryList.map((option) => option.title)}
-              options={productCategoryList?.map((option) => option.label)}
-              renderInput={(params) => <TextField {...params} label="category list" />}
-            />
+            </Grid>
+            <Grid item lg={4} md={4} style={{ marginLeft: '30px', padding: '0px' }}>
+              <Autocomplete
+                id="free-solo-demo"
+                freeSolo
+                // options={productCategoryList.map((option) => option.title)}
+                options={productCategoryList?.map((option) => option.label)}
+                renderInput={(params) => <TextField {...params} label="category list" />}
+              />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      {/* {
+        {/* {
           productCategoryList.length >0 && 
             <Grid item lg={12} md={12}>
               <div style={{ height: 400, width: '100%' }}>
@@ -291,7 +273,50 @@ const ProductCategories = () => {
               </div>
           </Grid>
         } */}
-    </Grid>
+      </Grid>
+
+      <TableContainer component={Paper} style={{ marginTop: '50px' }}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Category Name</TableCell>
+              <TableCell>Slug</TableCell>
+
+              <TableCell>Action</TableCell>
+
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {productCategoryList?.map((row) => (
+              <TableRow
+                key={row.label}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.label}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {row.value}
+                </TableCell>
+                <TableCell align="right" style={{ width: '150px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Button variant="outlined">Edit</Button>
+                    <Button variant="outlined" onClick={() => deleteProductCategoryList(row.id)}>
+                      Delete
+                    </Button>
+                  </div>
+                </TableCell>
+                {/* <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.carbs}</TableCell>
+                <TableCell align="right">{row.protein}</TableCell> */}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+    </>
   );
 };
 

@@ -4,7 +4,7 @@ import React from 'react';
 import AllProducts from '../Components/AllProducts';
 
 
-const ProductList = ()=>{
+const ProductList = () => {
     return (
         <>
             <Grid container>
@@ -12,7 +12,7 @@ const ProductList = ()=>{
                     Product List
                 </Typography>
                 <Grid item lg={12} md={12}>
-                    <AllProducts/>
+                    <AllProducts />
                 </Grid>
             </Grid>
         </>

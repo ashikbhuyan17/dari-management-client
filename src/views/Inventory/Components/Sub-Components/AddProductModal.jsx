@@ -20,8 +20,7 @@ import { getAccessToken } from "../../../../HTTP/token";
 const AddProductModal = ({
   closeModal,
   categoryList,
-  category,
-  setCategory,
+
   name,
   setName,
   price,
@@ -31,22 +30,25 @@ const AddProductModal = ({
   save,
   productCode,
   setProductCode,
+  category,
+  setCategory,
+  onFileChange
 }) => {
 
   const [productCategoryList, setProductCategoryList] = useState();
-  console.log('productCategoryList', productCategoryList)
-  const a = productCategoryList?.map(data => console.log(data.label))
+  // console.log('productCategoryList', productCategoryList)
+  // const a = productCategoryList?.map(data => console.log(data.label))
   const getProductCategoryList = async () => {
     const response = await axios.get(`http://localhost:5000/api/category/getCategory`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
-    console.log("getProductCategoryList", response)
+    // console.log("getProductCategoryList", response)
     if (response.status === 200) {
-      console.log(response.data.categoryList)
-      const value = response.data.categoryList.map(data => console.log(data.name))
-      console.log("value", value)
+      // console.log(response.data.categoryList)
+      // const value = response.data.categoryList.map(data => console.log(data.name))
+      // console.log("value", value)
 
       var arr = [
       ]
-      var result = response.data.categoryList.map(person => (arr.push({ label: person._id, value: person.slug })));
+      var result = response.data.categoryList.map(person => (arr.push({ label: person._id, value: person.slug, id: person._id })));
       setProductCategoryList(arr)
 
     }
@@ -56,6 +58,19 @@ const AddProductModal = ({
   useEffect(() => {
     getProductCategoryList();
   }, [])
+
+  // const [category, setCategory] = useState('')
+  // console.log("category", category);
+
+  // const [file, setFile] = useState('')
+  // const onFileChange = (event) => {
+  //   // Update the state
+  //   console.log("file", event)
+  //   console.log("file", event.target.files[0].name)
+
+  //   setFile(event.target.files[0]);
+
+  // };
 
   return (
     <>
@@ -157,7 +172,11 @@ const AddProductModal = ({
                 <Grid item lg={12} md={12}>
                   <Form.Group controlId="formFile" className="mb-3">
                     {/* <Form.Label>Default file input example</Form.Label> */}
-                    <Form.Control type="file" />
+                    <Form.Control
+                      type="file"
+                      onChange={onFileChange}
+
+                    />
                   </Form.Group>
                 </Grid>
               </Grid>
@@ -183,7 +202,7 @@ const AddProductModal = ({
                     >
                       {productCategoryList?.map((category) => {
                         return (
-                          <MenuItem key={category.label} value={category.value}>
+                          <MenuItem key={category.label} value={category.id}>
                             {category.value}
                           </MenuItem>
                         );
