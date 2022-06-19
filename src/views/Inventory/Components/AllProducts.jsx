@@ -60,7 +60,7 @@ const AllProducts = () => {
 
   };
   const addProductData = useCallback(async () => {
-    if (price === null) {
+    if (category == null) {
       setError(true);
       setErrorMessage("Please Fill all the fields");
     } else {

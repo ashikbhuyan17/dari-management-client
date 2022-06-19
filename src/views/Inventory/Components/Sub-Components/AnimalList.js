@@ -11,10 +11,20 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Grid, Button, MenuItem, Menu } from "@material-ui/core";
 import { Typography } from '@material-ui/core';
+import './AnimalList.css'
+import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
+const MySwal = withReactContent(Swal)
+
 
 
 const AnimalList = () => {
     const [pageNum, setPageNum] = useState(0)
+    const [numOfPages, setNumOfPages] = useState(0)
+    console.log('totalpage', numOfPages)
+
+    const pages = new Array(numOfPages).fill(null).map((v, i) => i)
+    console.log('pages', pages);
     const [getAnimal, setGetAnimal] = useState()
     console.log('getAnimal', getAnimal)
     const getAnimalList = async () => {
@@ -22,12 +32,38 @@ const AnimalList = () => {
         console.log('getAnimal', response)
         if (response.status === 200) {
             setGetAnimal(response.data.animal)
+            setNumOfPages(response?.data?.totalPages)
         }
     }
     useEffect(() => {
         getAnimalList()
     }, [pageNum])
-    const deleteProductCategoryList = () => { }
+
+    const gotoNext = () => {
+        setPageNum(Math.min(numOfPages - 1, pageNum + 1))
+    }
+
+    const gotoPrevious = () => {
+        setPageNum(Math.max(0, pageNum - 1))
+    }
+
+    const [addCategoryOpenModal, setAddCategoryOpenModal] = useState(false);
+    const closeAddCategoryModal = () => {
+        setAddCategoryOpenModal(false);
+    }
+    const deleteProductCategoryList = async (id) => {
+        console.log(id)
+        const response = await axios.delete(`http://localhost:5000/api/animal/deleteAnimal/${id}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+        console.log("getProductCategoryList", response)
+        if (response.status === 200) {
+            closeAddCategoryModal();
+            MySwal.fire({
+                icon: 'success',
+                title: 'Delete Success...',
+            });
+            getAnimalList();
+        }
+    }
     return (
         <>
             <Typography variant="h2" style={{ marginTop: '50px' }}>
@@ -80,7 +116,7 @@ const AnimalList = () => {
                                 <TableCell align="right" style={{ width: '150px' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                         <Button variant="outlined">Edit</Button>
-                                        <Button variant="outlined" onClick={() => deleteProductCategoryList(row.id)}>
+                                        <Button variant="outlined" onClick={() => deleteProductCategoryList(row._id)}>
                                             Delete
                                         </Button>
                                     </div>
@@ -94,6 +130,19 @@ const AnimalList = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+
+            <div style={{ textAlign: 'center', marginTop: '30px' }}>
+                <button onClick={gotoPrevious} className='preNext'>Previous</button>
+                {
+                    pages?.map((pageIndex) => {
+                        return (<button key={pageIndex} className='paginationBtn' onClick={() => setPageNum(pageIndex)}>{pageIndex + 1}</button>)
+                    })
+                }
+                <button onClick={gotoNext} className='preNext'>Next</button>
+
+            </div>
+
         </>
     );
 };
