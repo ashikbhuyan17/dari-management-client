@@ -9,35 +9,42 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Grid, Button, MenuItem, Menu } from "@material-ui/core";
+import { Grid, Button, MenuItem, Menu, Autocomplete, TextField, FormControl, InputLabel, Select } from "@material-ui/core";
 import { Typography } from '@material-ui/core';
 import './AnimalList.css'
 import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
 const MySwal = withReactContent(Swal)
 
-
+// import {
+//     Card,
+//     CardContent,
+//     Divider,
+//     Grid,
+//     TextField,
+//     Button,
+//     FormControl,
+//     InputLabel,
+//     Select,
+//     MenuItem,
+//     Alert,
+//   } from "@material-ui/core";
 
 const AnimalList = () => {
     const [pageNum, setPageNum] = useState(0)
     const [numOfPages, setNumOfPages] = useState(0)
-    console.log('totalpage', numOfPages)
 
     const pages = new Array(numOfPages).fill(null).map((v, i) => i)
     console.log('pages', pages);
     const [getAnimal, setGetAnimal] = useState()
-    console.log('getAnimal', getAnimal)
     const getAnimalList = async () => {
         const response = await axios.get(`http://localhost:5000/api/animal/getAnimal?page=${pageNum}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
-        console.log('getAnimal', response)
         if (response.status === 200) {
             setGetAnimal(response.data.animal)
             setNumOfPages(response?.data?.totalPages)
         }
     }
-    useEffect(() => {
-        getAnimalList()
-    }, [pageNum])
+
 
     const gotoNext = () => {
         setPageNum(Math.min(numOfPages - 1, pageNum + 1))
@@ -54,7 +61,6 @@ const AnimalList = () => {
     const deleteProductCategoryList = async (id) => {
         console.log(id)
         const response = await axios.delete(`http://localhost:5000/api/animal/deleteAnimal/${id}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
-        console.log("getProductCategoryList", response)
         if (response.status === 200) {
             closeAddCategoryModal();
             MySwal.fire({
@@ -64,11 +70,85 @@ const AnimalList = () => {
             getAnimalList();
         }
     }
+
+
+    // const [category, setCategory] = useState()
+    // console.log('setCategory', category)
+
+    const getCategoryList = async (categoryId) => {
+        console.log('categoryId', categoryId);
+        const response = await axios.get(`http://localhost:5000/api/animal/getCategory/${categoryId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+        console.log('getCategoryList', response);
+        if (response.status === 200) {
+            setGetAnimal(response.data.animal)
+
+        }
+    }
+
+
+    // console.log('productCategoryList', productCategoryList)
+    const [productCategoryList, setProductCategoryList] = useState();
+    const getProductCategoryList = async () => {
+        const response = await axios.get(`http://localhost:5000/api/category/getCategory`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+        if (response.status === 200) {
+
+            var arr = [
+            ]
+            var result = response.data.categoryList.map(person => (arr.push({ label: person.name, value: person.slug, id: person._id })));
+            setProductCategoryList(arr)
+
+        }
+    }
+
+
+    useEffect(() => {
+        getAnimalList()
+        getProductCategoryList()
+        getCategoryList()
+    }, [pageNum])
+
+
     return (
         <>
-            <Typography variant="h2" style={{ marginTop: '50px' }}>
+            {/* <Typography variant="h2" style={{ marginTop: '50px' }}>
                 Product List
-            </Typography>
+            </Typography> */}
+            <Grid
+                container
+                direction="row"
+                spacing="2">
+
+                {/* <Grid item lg={3} md={3}>
+                    <Typography variant="h2">
+                        Product List
+                    </Typography>
+                </Grid> */}
+                {/* category */}
+
+                <Grid item lg={6} md={6} sm={6} style={{ marginTop: '25px' }}>
+                    <FormControl fullWidth variant="outlined">
+                        <InputLabel id="demo-simple-select-outlined-label">
+                            Select Category
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-outlined-label"
+                            // value={category}
+                            onChange={(event) => getCategoryList(event.target.value)}
+                            // onClick={getCategoryList}
+                            label="Select Category"
+                        >
+                            {productCategoryList?.map((category) => {
+                                return (
+                                    <MenuItem key={category.label} value={category.id}>
+                                        {category.value}
+                                    </MenuItem>
+                                );
+                            })}
+                        </Select>
+                    </FormControl>
+                </Grid>
+            </Grid>
+
             <TableContainer component={Paper} style={{ marginTop: '30px' }}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
