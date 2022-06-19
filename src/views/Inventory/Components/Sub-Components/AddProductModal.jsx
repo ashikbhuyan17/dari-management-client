@@ -16,24 +16,70 @@ import CloseIcon from "@material-ui/icons/Close";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import Form from 'react-bootstrap/Form';
 import axios from "axios";
+
+import Stack from '@mui/material/Stack';
+// import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+
+
 import { getAccessToken } from "../../../../HTTP/token";
 const AddProductModal = ({
   closeModal,
-  categoryList,
+ 
 
-  name,
-  setName,
-  price,
-  setPrice,
   isError,
   errorMessage,
   save,
-  productCode,
-  setProductCode,
+
   category,
   setCategory,
-  onFileChange
+  
+  onFileChange,
+
+  batch_no,
+  setBatch_no,
+
+  id_no,
+  setId_no,
+
+  bio_flock_plant_no,
+  setBio_flock_plant_no,
+
+  weight,
+  setWeight,
+
+  color,
+  setColor,
+
+  gender,
+  setGender,
+
+  age,
+  setAge,
+
+  quantity,
+  setQuantity,
+
+  buying_price,
+  setBuying_price,
+
+  price,
+  setPrice,
+
+  purchase_date,
+  setPurchase_date
+
 }) => {
+  // const [value, setValue] = React.useState(new Date());
+  const handleChange = (newValue) => {
+    setPurchase_date(newValue);
+  };
+
 
   const [productCategoryList, setProductCategoryList] = useState();
   // console.log('productCategoryList', productCategoryList)
@@ -58,6 +104,7 @@ const AddProductModal = ({
   useEffect(() => {
     getProductCategoryList();
   }, [])
+
 
   // const [category, setCategory] = useState('')
   // console.log("category", category);
@@ -87,7 +134,7 @@ const AddProductModal = ({
                 spacing="1"
               >
                 <Grid item lg={6} md={6}>
-                  <h1>Add Product</h1>
+                  <h1>Add Animal</h1>
                 </Grid>
                 <Grid item lg={3} md={3} />
                 <Grid item lg={2} md={2} />
@@ -122,66 +169,8 @@ const AddProductModal = ({
                 )}
               </Grid>
               <br />
-              <Grid
-                container
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing="1"
-              >
-                <Grid item lg={12} md={12}>
-                  <TextField
-                    fullWidth
-                    value={name}
-                    onChange={(event) => {
-                      setName(event.target.value);
-                    }}
-                    variant="outlined"
-                    label="Name"
-                  />
-                </Grid>
-              </Grid>
-              <br />
-              <Grid
-                container
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing="1"
-              >
-                <Grid item lg={12} md={12}>
-                  <TextField
-                    fullWidth
-                    value={productCode}
-                    onChange={(event) => {
-                      setProductCode(event.target.value);
-                    }}
-                    variant="outlined"
-                    label="Product Code"
-                  />
-                </Grid>
-              </Grid>
 
-              <Grid
-                container
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-                spacing="1"
-              >
-                <Grid item lg={12} md={12}>
-                  <Form.Group controlId="formFile" className="mb-3">
-                    {/* <Form.Label>Default file input example</Form.Label> */}
-                    <Form.Control
-                      type="file"
-                      onChange={onFileChange}
-
-                    />
-                  </Form.Group>
-                </Grid>
-              </Grid>
-
-              <br />
+              {/* category */}
               <Grid
                 container
                 direction="row"
@@ -210,10 +199,237 @@ const AddProductModal = ({
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item lg={4} md={4} />
               </Grid>
               <br />
+
+
+
+              {/* batch_no  id_no*/}
               <Grid
+                container spacing={2}
+              >
+                <Grid item lg={6} md={6}>
+                  <TextField
+                    fullWidth
+                    value={batch_no}
+                    onChange={(event) => {
+                      setBatch_no(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="batch_no"
+                  />
+                </Grid>
+                <Grid item lg={6} md={6}>
+                  <TextField
+                    fullWidth
+                    value={id_no}
+                    onChange={(event) => {
+                      setId_no(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="id_no"
+                  />
+                </Grid>
+              </Grid>
+              <br />
+
+
+              {/* setBio_flock_plant_no setPurchase_date  */}
+              <Grid
+                container spacing={2}
+              >
+                <Grid item lg={6} md={6}>
+                  <TextField
+                    fullWidth
+                    value={bio_flock_plant_no}
+                    onChange={(event) => {
+                      setBio_flock_plant_no(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="bio_flock_plant_no"
+                  />
+                </Grid>
+                <Grid item lg={6} md={6}>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <Stack spacing={3}>
+
+                      <DateTimePicker
+                        label="Date&Time picker"
+                        value={purchase_date}
+                        onChange={handleChange}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </Stack>
+                  </LocalizationProvider>
+                </Grid>
+              </Grid>
+              <br />
+
+
+
+              {/* image weight */}
+              <Grid
+                container spacing={2}
+              >
+                <Grid item lg={6} md={6} style={{ border: '1px solid #dae0eb', padding: '0px', marginTop: '5px', textAlign: 'center', }}>
+                  <Form.Group controlId="formFile" style={{ paddingTop: '20px' }}>
+                    <Form.Control
+                      type="file"
+                      onChange={onFileChange}
+
+                    />
+                  </Form.Group>
+                </Grid>
+                <Grid item lg={6} md={6}>
+                  <TextField
+                    fullWidth
+                    value={weight}
+                    onChange={(event) => {
+                      setWeight(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="weight"
+                  />
+                </Grid>
+              </Grid>
+              <br />
+
+
+
+              {/* color gender */}
+              <Grid
+                container spacing={2}
+              >
+                <Grid item lg={6} md={6}>
+                  <TextField
+                    fullWidth
+                    value={color}
+                    onChange={(event) => {
+                      setColor(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="color"
+                  />
+                </Grid>
+                <Grid item lg={6} md={6}>
+                  <TextField
+                    fullWidth
+                    value={gender}
+                    onChange={(event) => {
+                      setGender(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="gender"
+                  />
+                </Grid>
+              </Grid>
+              <br />
+
+
+
+              {/* age quantity */}
+              <Grid
+                container spacing={2}
+              >
+                <Grid item lg={6} md={6}>
+                  <TextField
+                    fullWidth
+                    value={age}
+                    onChange={(event) => {
+                      setAge(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="age"
+                  />
+                </Grid>
+                <Grid item lg={6} md={6}>
+                  <TextField
+                    fullWidth
+                    value={quantity}
+                    onChange={(event) => {
+                      setQuantity(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="quantity"
+                  />
+                </Grid>
+              </Grid>
+              <br />
+
+
+              {/* buying_price selling_price */}
+              <Grid
+                container spacing={2}
+              >
+                <Grid item lg={6} md={6}>
+                  <TextField
+                    fullWidth
+                    value={buying_price}
+                    onChange={(event) => {
+                      setBuying_price(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="buying_price"
+                  />
+                </Grid>
+                <Grid item lg={6} md={6}>
+                  <TextField
+                    fullWidth
+                    value={price}
+                    onChange={(event) => {
+                      setPrice(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="selling_price"
+                  />
+                </Grid>
+              </Grid>
+              <br />
+
+
+
+              {/* <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                spacing="1"
+              >
+                <Grid item lg={12} md={12}>
+                  <TextField
+                    fullWidth
+                    value={productCode}
+                    onChange={(event) => {
+                      setProductCode(event.target.value);
+                    }}
+                    variant="outlined"
+                    label="Product Code"
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                spacing="1"
+              >
+                <Grid item lg={12} md={12}>
+                  <Form.Group controlId="formFile" className="mb-3">
+                    <Form.Control
+                      type="file"
+                      onChange={onFileChange}
+
+                    />
+                  </Form.Group>
+                </Grid>
+              </Grid> */}
+
+
+
+
+              {/* <Grid
                 container
                 direction="row"
                 justifyContent="center"
@@ -232,7 +448,7 @@ const AddProductModal = ({
                     label="Selling Price"
                   />
                 </Grid>
-              </Grid>
+              </Grid> */}
             </CardContent>
             <Divider />
             <CardContent>

@@ -28,19 +28,23 @@ const AllProducts = () => {
   const openAddProductModal = () => {
     setAddProductModalOpen(true);
   };
-  const [productCategory, setProductCategory] = useState("");
-  const [productCategoryId, setProductCategoryId] = useState("");
-  const changeProductCategory = (value) => {
-    const productCategoryID = categoryList.filter((category) => {
-      return value === category.name;
-    });
-    setProductCategory(value);
-    // setProductCategoryId(productCategoryID[0].id);
-  };
-  const [name, setName] = useState("");
-  console.log("name", name);
+
+  const [batch_no, setBatch_no] = useState("");
+  const [id_no, setId_no] = useState("");
+  const [bio_flock_plant_no, setBio_flock_plant_no] = useState("");
+  const [weight, setWeight] = useState("");
+  const [color, setColor] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [buying_price, setBuying_price] = useState("");
+  const [purchase_date, setPurchase_date] = useState(new Date());
+
+
+
+
   const [category, setCategory] = useState('')
-  console.log("category", category);
+  console.log(category)
   const [price, setPrice] = useState(null);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,25 +59,48 @@ const AllProducts = () => {
 
   };
   const addProductData = useCallback(async () => {
-    if (name === "" || price === null) {
+    if (price === null) {
       setError(true);
       setErrorMessage("Please Fill all the fields");
     } else {
       setError(false);
       const data = {
-        name: name,
-        category: category,
-        selling_price: price,
+        category,
         productCode,
-        file
+        file,
+        batch_no,
+        id_no,
+        bio_flock_plant_no,
+        weight,
+        color,
+        gender,
+        age,
+        quantity,
+        selling_price: price,
+        buying_price,
+        purchase_date
       };
       console.log("data", data)
 
       let formData = new FormData();
       formData.append('animal_picture', file);
-      formData.append('name', name);
       formData.append('category', category);
+      formData.append('batch_no', batch_no);
+      formData.append('id_no', id_no);
+      formData.append('bio_flock_plant_no', bio_flock_plant_no);
+      formData.append('weight', weight);
+      formData.append('color', color);
+      formData.append('gender', gender);
+      formData.append('age', age);
+      formData.append('quantity', quantity);
       formData.append('selling_price', price);
+      formData.append('buying_price', buying_price);
+      formData.append('purchase_date', purchase_date);
+
+
+
+
+
       console.log('form data', formData)
 
 
@@ -82,10 +109,6 @@ const AllProducts = () => {
       });
       if (response.status === 201) {
         closeAddProductModal();
-        setProductCategory("");
-        setProductCategoryId("");
-        setName("");
-        setPrice(null);
         // getProductList();
         MySwal.fire({
           icon: "success",
@@ -94,7 +117,7 @@ const AllProducts = () => {
         });
       }
     }
-  }, [name, price, category]);
+  }, [price, category]);
 
 
 
@@ -188,7 +211,7 @@ const AllProducts = () => {
           variant="contained"
           startIcon={<EditIcon />}
         >
-          Add
+          Create Animal
         </Button>
         {/* Add product modal */}
         <Modal
@@ -201,19 +224,53 @@ const AllProducts = () => {
             isError={error}
             errorMessage={errorMessage}
             save={addProductData}
-            name={name}
-            setName={setName}
+
             file={file}
             setFile={setFile}
-            price={price}
-            setPrice={setPrice}
+
             category={category}
             setCategory={setCategory}
-            categoryList={categoryList}
-            productCode={productCode}
-            setProductCode={setProductCode}
+
             closeModal={closeAddProductModal}
+
             onFileChange={onFileChange}
+
+            batch_no={batch_no}
+            setBatch_no={setBatch_no}
+
+            id_no={id_no}
+            setId_no={setId_no}
+
+            bio_flock_plant_no={bio_flock_plant_no}
+            setBio_flock_plant_no={setBio_flock_plant_no}
+
+            weight={weight}
+            setWeight={setWeight}
+
+
+            color={color}
+            setColor={setColor}
+
+            gender={gender}
+            setGender={setGender}
+
+            age={age}
+            setAge={setAge}
+
+            quantity={quantity}
+            setQuantity={setQuantity}
+
+            buying_price={buying_price}
+            setBuying_price={setBuying_price}
+
+            price={price}
+            setPrice={setPrice}
+
+            purchase_date={purchase_date}
+            setPurchase_date={setPurchase_date}
+
+
+
           />
         </Modal>
       </Grid>
