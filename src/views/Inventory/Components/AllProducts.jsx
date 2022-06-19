@@ -10,6 +10,7 @@ import { getAccessToken } from "../../../HTTP/token";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import EditProductModal from "./Sub-Components/EditProductModal";
+import AnimalList from "./Sub-Components/AnimalList";
 const MySwal = withReactContent(Swal);
 export const productList = [];
 const AllProducts = () => {
@@ -115,6 +116,9 @@ const AllProducts = () => {
           title: "Great...",
           // text: `${response.data}`,
         });
+        setTimeout(() => {
+          window.location.reload()
+        }, 2000);
       }
     }
   }, [price, category]);
@@ -274,6 +278,8 @@ const AllProducts = () => {
           />
         </Modal>
       </Grid>
+
+      <AnimalList />
     </>
   );
 };

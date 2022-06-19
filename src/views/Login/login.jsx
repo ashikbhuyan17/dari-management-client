@@ -46,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: '8px',
     backgroundColor: '#f48fb1',
-    width:"260px !important",
-    height:"260px !important"
+    width: "260px !important",
+    height: "260px !important"
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -60,59 +60,59 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-    const navigate = useNavigate();
-    // const url = `${getUrl()}/user/signin`;
-    const url = `http://localhost:5000/api/signin`;
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
-    const signIn = async()=>{
-        const data = {
-            email,
-            password
-        }
-        try{
-          const response = await axios.post(url,data);
-          console.log("response",response)
-          console.log("response",response.data.user.role)
-
-          if(response.status === 200){
-            const {token} = response.data;
-            const{role,fullname}=response.data.user
-            localStorage.setItem("accessToken",token);
-            localStorage.setItem("role",role);
-            localStorage.setItem("username",fullname);
-            // navigate('/dashboards/home');
-            await checkRoleAndRedirect(role);
-            // if(role === 'admin' || role ==='Admin'){
-            //   navigate('/dashboards/home');
-            // }
-          }
-        }
-        catch(error){
-          MySwal.fire({
-            icon: 'error',
-            title: 'Opps...',
-            text: `You might have given wrong credentials`,
-          });
-        }
-        
+  const navigate = useNavigate();
+  // const url = `${getUrl()}/user/signin`;
+  const url = `http://localhost:5000/api/signin`;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const signIn = async () => {
+    const data = {
+      email,
+      password
     }
-    const checkRoleAndRedirect = async(role)=>{
-      if(role.toLowerCase() === 'admin' || role.toLowerCase() ==='cashier'  || role.toLowerCase() ==="accountant" 
-      || role.toLowerCase() ==="stockmanager"){
-          navigate('/dashboards/home');
-      }else if(role.toLowerCase() === 'waiter'){
-        navigate('/pos');
+    try {
+      const response = await axios.post(url, data);
+      console.log("response", response)
+      console.log("response", response.data.user.role)
+
+      if (response.status === 200) {
+        const { token } = response.data;
+        const { role, fullname } = response.data.user
+        localStorage.setItem("accessToken", token);
+        localStorage.setItem("role", role);
+        localStorage.setItem("username", fullname);
+        // navigate('/dashboards/home');
+        await checkRoleAndRedirect(role);
+        // if(role === 'admin' || role ==='Admin'){
+        //   navigate('/dashboards/home');
+        // }
       }
     }
+    catch (error) {
+      MySwal.fire({
+        icon: 'error',
+        title: 'Opps...',
+        text: `You might have given wrong credentials`,
+      });
+    }
+
+  }
+  const checkRoleAndRedirect = async (role) => {
+    if (role.toLowerCase() === 'admin' || role.toLowerCase() === 'cashier' || role.toLowerCase() === "accountant"
+      || role.toLowerCase() === "stockmanager") {
+      navigate('/dashboards/home');
+    } else if (role.toLowerCase() === 'waiter') {
+      navigate('/pos');
+    }
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar 
+      <div className={classes.paper} style={{ marginTop: '200px' }}>
+        {/* <Avatar 
         className={classes.avatar}>
           <img src="https://res.cloudinary.com/chiranswe/image/upload/v1633716259/desha_logo-removebg-preview_xf8sec.png" alt="" />
-        </Avatar>
+        </Avatar> */}
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -125,7 +125,7 @@ export default function Login() {
             label="Email Address"
             autoFocus
             value={email}
-            onChange={(event)=>setEmail(event.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
           />
           <TextField
             variant="outlined"
@@ -135,7 +135,7 @@ export default function Login() {
             label="Password"
             type="password"
             value={password}
-            onChange={(event)=>setPassword(event.target.value)}
+            onChange={(event) => setPassword(event.target.value)}
             autoComplete="current-password"
           />
           <FormControlLabel

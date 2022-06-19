@@ -30,7 +30,7 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { getAccessToken } from "../../../../HTTP/token";
 const AddProductModal = ({
   closeModal,
- 
+
 
   isError,
   errorMessage,
@@ -38,7 +38,7 @@ const AddProductModal = ({
 
   category,
   setCategory,
-  
+
   onFileChange,
 
   batch_no,
@@ -178,7 +178,7 @@ const AddProductModal = ({
                 alignItems="center"
                 spacing="1"
               >
-                <Grid item lg={12} md={12}>
+                <Grid item lg={12} md={6} sm={6}>
                   <FormControl fullWidth variant="outlined">
                     <InputLabel id="demo-simple-select-outlined-label">
                       Select Category
