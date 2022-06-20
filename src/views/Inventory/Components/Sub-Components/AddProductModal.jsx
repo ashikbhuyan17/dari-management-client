@@ -72,7 +72,11 @@ const AddProductModal = ({
   setPrice,
 
   purchase_date,
-  setPurchase_date
+  setPurchase_date,
+
+
+  file,
+  setFile
 
 }) => {
   // const [value, setValue] = React.useState(new Date());
@@ -275,7 +279,11 @@ const AddProductModal = ({
                   <Form.Group controlId="formFile" style={{ paddingTop: '20px' }}>
                     <Form.Control
                       type="file"
-                      onChange={onFileChange}
+                      value={file}
+                      // onChange={onFileChange}
+                      onChange={(event) => {
+                        setFile(event.target.value);
+                      }}
 
                     />
                   </Form.Group>

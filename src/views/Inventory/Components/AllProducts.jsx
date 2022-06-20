@@ -50,22 +50,23 @@ const AllProducts = () => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [file, setFile] = useState("");
+  console.log('file', file)
 
-  const onFileChange = (event) => {
-    // Update the state
-    // console.log("file", event)
-    // console.log("file", event.target.files[0].name)
+  // const onFileChange = (event) => {
+  //   // Update the state
+  //   console.log("file", event)
+  //   console.log("file", event.target.files[0].name)
 
-    setFile(event.target.files[0].name);
+  //   setFile(event.target.files[0].name);
 
-  };
+  // };
   const addProductData = useCallback(async () => {
     if (category == null) {
       setError(true);
       setErrorMessage("Please Fill all the fields");
     } else {
       setError(false);
-      const data = {
+      let data = {
         category,
         productCode,
         file,
@@ -116,9 +117,9 @@ const AllProducts = () => {
           title: "Great...",
           // text: `${response.data}`,
         });
-        setTimeout(() => {
-          window.location.reload()
-        }, 2000);
+        // setTimeout(() => {
+        //   window.location.reload()
+        // }, 2000);
       }
     }
   }, [price, category]);
@@ -237,7 +238,7 @@ const AllProducts = () => {
 
             closeModal={closeAddProductModal}
 
-            onFileChange={onFileChange}
+            // onFileChange={onFileChange}
 
             batch_no={batch_no}
             setBatch_no={setBatch_no}

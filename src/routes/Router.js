@@ -63,6 +63,7 @@ import UserCreate from "../views/User Management/UserCreate.jsx";
 import UserDetails from "../views/User Management/Components/UserDetails.jsx";
 import UserEditForm from "../views/User Management/Components/UserEditForm.jsx";
 import ItemSalesReport from "../views/Reports/Views/ItemSalesReport.jsx";
+import Register from "../views/Register/Register.js";
 
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout/FullLayout.js"));
@@ -81,7 +82,7 @@ const ThemeRoutes = [
       // { path: "pos/list", exact: true, element: <PosList /> },
       { path: "product/create", exact: true, element: <AddProduct /> },
       { path: "product/list", exact: true, element: <ProductList /> },
-     
+
       // { path: "product/units", exact: true, element: <ProductUnits /> },
       {
         path: "product/categories",
@@ -114,7 +115,7 @@ const ThemeRoutes = [
       // { path: "draft/list", exact: true, element: <DraftList /> },
       // { path: "quotation/create", exact: true, element: <AddQuotation /> },
       // { path: "quotation/list", exact: true, element: <QuotationList /> },
-     
+
 
 
       // delete
@@ -188,7 +189,7 @@ const ThemeRoutes = [
       //   element: <PaymentAccountReport />,
       // },
 
-      
+
       { path: "report/expense", exact: true, element: <ExpenseReport /> },
       {
         path: "report/stock-adjustment",
@@ -251,6 +252,10 @@ const ThemeRoutes = [
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ];
 

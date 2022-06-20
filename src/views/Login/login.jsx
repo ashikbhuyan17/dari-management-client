@@ -72,8 +72,8 @@ export default function Login() {
     }
     try {
       const response = await axios.post(url, data);
-      console.log("response", response)
-      console.log("response", response.data.user.role)
+      // console.log("response", response)
+      // console.log("response", response.data.user.role)
 
       if (response.status === 200) {
         const { token } = response.data;
@@ -158,7 +158,7 @@ export default function Login() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="#/register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

@@ -37,6 +37,9 @@ const AnimalList = () => {
     const pages = new Array(numOfPages).fill(null).map((v, i) => i)
     console.log('pages', pages);
     const [getAnimal, setGetAnimal] = useState()
+    console.log("🚀 ~ file: AnimalList.js ~ line 40 ~ AnimalList ~ getAnimal", getAnimal)
+    console.log("🚀  getAnimal", getAnimal?.animal_picture)
+
     const getAnimalList = async () => {
         const response = await axios.get(`http://localhost:5000/api/animal/getAnimal?page=${pageNum}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
         if (response.status === 200) {
@@ -76,9 +79,9 @@ const AnimalList = () => {
     // console.log('setCategory', category)
 
     const getCategoryList = async (categoryId) => {
-        console.log('categoryId', categoryId);
+        // console.log('categoryId', categoryId);
         const response = await axios.get(`http://localhost:5000/api/animal/getCategory/${categoryId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
-        console.log('getCategoryList', response);
+        // console.log('getCategoryList', response);
         if (response.status === 200) {
             setGetAnimal(response.data.animal)
 
@@ -156,6 +159,7 @@ const AnimalList = () => {
                             <TableCell>Category</TableCell>
                             <TableCell>Batch No</TableCell>
                             <TableCell>Id No</TableCell>
+                            <TableCell>Image</TableCell>
 
                             <TableCell>BioFlock_plantNo</TableCell>
                             <TableCell>Weight</TableCell>
@@ -181,6 +185,7 @@ const AnimalList = () => {
                             >
                                 <TableCell component="th" scope="row"> {row?.category?.name}</TableCell>
                                 <TableCell component="th" scope="row"> {row?.batch_no}</TableCell>
+                                <TableCell component="th" scope="row">{row?.id_no}</TableCell>
                                 <TableCell component="th" scope="row">{row?.id_no}</TableCell>
                                 <TableCell component="th" scope="row">{row?.bio_flock_plant_no}</TableCell>
                                 <TableCell component="th" scope="row">{row?.weight}</TableCell>
