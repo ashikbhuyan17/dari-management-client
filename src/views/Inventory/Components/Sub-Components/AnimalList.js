@@ -41,7 +41,7 @@ const AnimalList = () => {
     console.log("🚀  getAnimal", getAnimal?.animal_picture)
 
     const getAnimalList = async () => {
-        const response = await axios.get(`http://localhost:5000/api/animal/getAnimal?page=${pageNum}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+        const response = await axios.get(`https://immense-badlands-33128.herokuapp.com/api/animal/getAnimal?page=${pageNum}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
         if (response.status === 200) {
             setGetAnimal(response.data.animal)
             setNumOfPages(response?.data?.totalPages)
@@ -63,7 +63,7 @@ const AnimalList = () => {
     }
     const deleteProductCategoryList = async (id) => {
         console.log(id)
-        const response = await axios.delete(`http://localhost:5000/api/animal/deleteAnimal/${id}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+        const response = await axios.delete(`https://immense-badlands-33128.herokuapp.com/api/animal/deleteAnimal/${id}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
         if (response.status === 200) {
             closeAddCategoryModal();
             MySwal.fire({
@@ -80,7 +80,7 @@ const AnimalList = () => {
 
     const getCategoryList = async (categoryId) => {
         // console.log('categoryId', categoryId);
-        const response = await axios.get(`http://localhost:5000/api/animal/getCategory/${categoryId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+        const response = await axios.get(`https://immense-badlands-33128.herokuapp.com/api/animal/getCategory/${categoryId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
         // console.log('getCategoryList', response);
         if (response.status === 200) {
             setGetAnimal(response.data.animal)
@@ -92,7 +92,7 @@ const AnimalList = () => {
     // console.log('productCategoryList', productCategoryList)
     const [productCategoryList, setProductCategoryList] = useState();
     const getProductCategoryList = async () => {
-        const response = await axios.get(`http://localhost:5000/api/category/getCategory`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+        const response = await axios.get(`https://immense-badlands-33128.herokuapp.com/api/category/getCategory`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
         if (response.status === 200) {
 
             var arr = [

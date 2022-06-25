@@ -62,7 +62,7 @@ export default function Register() {
     const classes = useStyles();
     const navigate = useNavigate();
     // const url = `${getUrl()}/user/signin`;
-    const url = `http://localhost:5000/api/admin/signup`;
+    const url = `https://immense-badlands-33128.herokuapp.com/api/admin/signup`;
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");

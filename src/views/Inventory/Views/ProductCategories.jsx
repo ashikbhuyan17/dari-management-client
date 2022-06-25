@@ -30,7 +30,7 @@ const ProductCategories = () => {
   console.log('productCategoryList', productCategoryList)
   const a = productCategoryList?.map(data => console.log(data.label))
   const getProductCategoryList = async () => {
-    const response = await axios.get(`http://localhost:5000/api/category/getCategory`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+    const response = await axios.get(`https://immense-badlands-33128.herokuapp.com/api/category/getCategory`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
     console.log("getProductCategoryList", response)
     if (response.status === 200) {
       console.log(response.data.categoryList)
@@ -49,7 +49,7 @@ const ProductCategories = () => {
 
   const deleteProductCategoryList = async (id) => {
     console.log(id)
-    const response = await axios.delete(`http://localhost:5000/api/category/deleteCategory/${id}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+    const response = await axios.delete(`https://immense-badlands-33128.herokuapp.com/api/category/deleteCategory/${id}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
     console.log("getProductCategoryList", response)
     if (response.status === 200) {
       closeAddCategoryModal();
@@ -101,7 +101,7 @@ const ProductCategories = () => {
       const data = {
         name: category,
       }
-      const response = await axios.post(`http://localhost:5000/api/category/create`, data, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+      const response = await axios.post(`https://immense-badlands-33128.herokuapp.com/api/category/create`, data, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
       if (response.status === 201) {
         closeAddCategoryModal();
         MySwal.fire({

@@ -85,7 +85,7 @@ const AllProducts = () => {
       console.log("data", data)
 
       let formData = new FormData();
-      formData.append('animal_picture', file);
+      // formData.append('animalPicture', file);
       formData.append('category', category);
       formData.append('batch_no', batch_no);
       formData.append('id_no', id_no);
@@ -106,7 +106,7 @@ const AllProducts = () => {
       console.log('form data', formData)
 
 
-      const response = await axios.post(`http://localhost:5000/api/animal/create`, formData, {
+      const response = await axios.post(`https://immense-badlands-33128.herokuapp.com/api/animal/create`, formData, {
         headers: { Authorization: `Bearer ${getAccessToken()}` },
       });
       if (response.status === 201) {
