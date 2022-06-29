@@ -36,7 +36,7 @@ const PurchaseList = () => {
 
   const getPurchase = async () => {
 
-    const response = await axios.get(`http://localhost:5000/api/purchase/getPurchase?page=${pageNum}`);
+    const response = await axios.get(`https://immense-badlands-33128.herokuapp.com/api/purchase/getPurchase?page=${pageNum}`);
     console.log(response.data?.purchaseData);
     setPurchaseList(response?.data?.purchaseData)
     setNumOfPages(response?.data?.totalPages)
@@ -46,7 +46,7 @@ const PurchaseList = () => {
   const deleteProductCategoryList = async (id) => {
     console.log("id", id);
     console.log(id)
-    const response = await axios.delete(`http://localhost:5000/api/purchase/deletePurchase/${id}`);
+    const response = await axios.delete(`https://immense-badlands-33128.herokuapp.com/api/purchase/deletePurchase/${id}`);
     if (response.status === 200) {
       MySwal.fire({
         icon: 'success',
