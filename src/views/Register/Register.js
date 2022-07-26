@@ -1,9 +1,4 @@
 
-
-
-
-
-
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -22,6 +17,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const MySwal = withReactContent(Swal)
 function Copyright() {
     return (
@@ -85,14 +83,29 @@ export default function Register() {
         const response = await axios.post(url, data);
         console.log('response', response)
         if (response.status === 201) {
-            navigate("/login")
-
-        } else {
             console.log('response', response)
-            MySwal.fire({
-                icon: 'error',
-                title: 'Opps...',
-                text: `${response?.message}`,
+            toast.success("Registration Successful ", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            setTimeout(() => {
+                navigate("/login")
+            }, 3000);
+        }
+        if (response.status == 400) {
+            toast.error("Something went wrong ", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
             });
             // alert("please fill up all the fields")
         }
@@ -102,14 +115,14 @@ export default function Register() {
 
 
     }
-    const checkRoleAndRedirect = async (role) => {
-        if (role.toLowerCase() === 'admin' || role.toLowerCase() === 'cashier' || role.toLowerCase() === "accountant"
-            || role.toLowerCase() === "stockmanager") {
-            navigate('/dashboards/home');
-        } else if (role.toLowerCase() === 'waiter') {
-            navigate('/pos');
-        }
-    }
+    // const checkRoleAndRedirect = async (role) => {
+    //     if (role.toLowerCase() === 'admin' || role.toLowerCase() === 'cashier' || role.toLowerCase() === "accountant"
+    //         || role.toLowerCase() === "stockmanager") {
+    //         navigate('/dashboards/home');
+    //     } else if (role.toLowerCase() === 'waiter') {
+    //         navigate('/pos');
+    //     }
+    // }
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -188,14 +201,14 @@ export default function Register() {
                         className={classes.submit}
                         onClick={signIn}
                     >
-                        Sign In
+                        Sign Up
                     </Button>
                     <Grid container>
-                        <Grid item xs>
+                        {/* <Grid item xs>
                             <Link href="#" variant="body2">
                                 Forgot password?
                             </Link>
-                        </Grid>
+                        </Grid> */}
                         <Grid item>
                             <Link href="#/login" variant="body2">
                                 {"Don't have an account? Sign In"}
@@ -204,9 +217,10 @@ export default function Register() {
                     </Grid>
                 </form>
             </div>
-            <Box mt={8}>
+            {/* <Box mt={8}>
                 <Copyright />
-            </Box>
+            </Box> */}
+            <ToastContainer />
         </Container>
     );
 }

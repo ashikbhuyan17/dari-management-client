@@ -32,18 +32,18 @@ import { useNavigate } from 'react-router';
 
 const Header = (props) => {
   const navigate = useNavigate();
-  const logOut = ()=>{
+  const logOut = () => {
     handleClose4();
     MySwal.fire({
       title: 'Sure you want to leave?',
       showCancelButton: true,
       confirmButtonText: 'Leave',
       cancelButtonText: `Stay`,
-    }).then(async(result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         localStorage.clear();
         navigate('/login');
-      } else if (result.isDenied) {}
+      } else if (result.isDenied) { }
     })
   }
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -76,6 +76,11 @@ const Header = (props) => {
   const handleClose4 = () => {
     setAnchorEl4(null);
   };
+
+  const handleRedirect = () => {
+    navigate("new/register/user", { replace: true });
+  }
+
 
   // 5
   const [anchorEl5, setAnchorEl5] = React.useState(null);
@@ -322,7 +327,7 @@ const Header = (props) => {
             </Box>
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleClose4}>
+          <MenuItem onClick={handleRedirect}>
             <ListItemIcon>
               <PersonAdd fontSize="small" />
             </ListItemIcon>

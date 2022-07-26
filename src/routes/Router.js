@@ -257,6 +257,10 @@ const ThemeRoutes = [
     path: "/register",
     element: <Register />,
   },
+  {
+    path: "new/register/user",
+    element: <Register />,
+  },
 ];
 
 export default ThemeRoutes;

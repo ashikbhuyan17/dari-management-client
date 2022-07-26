@@ -1,21 +1,21 @@
 
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import { ListItem } from '@material-ui/core';
 import { Collapse } from '@material-ui/core';
-import {ExpandLess, ExpandMore} from "@material-ui/icons/";
+import { ExpandLess, ExpandMore } from "@material-ui/icons/";
 import { ListItemIcon } from '@material-ui/core';
 import { ListItemText } from '@material-ui/core';
 import { List } from '@material-ui/core';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
-const ExpenseSidebarContent = ({navigate,pathname,activeColor,inactiveColor,inactiveTextColor,activeTextColor}) => {
-  const [openExpenseDropdown,setExpenseDropdownOpen] = useState(false);
-  const handleExpenseDropdownOpen = ()=>{
+const ExpenseSidebarContent = ({ navigate, pathname, activeColor, inactiveColor, inactiveTextColor, activeTextColor }) => {
+  const [openExpenseDropdown, setExpenseDropdownOpen] = useState(false);
+  const handleExpenseDropdownOpen = () => {
     setExpenseDropdownOpen(!openExpenseDropdown);
   }
   return (
     <>
-    <ListItem 
+      {/* <ListItem 
         onClick={handleExpenseDropdownOpen}
         button>
           <ListItemIcon>
@@ -60,7 +60,7 @@ const ExpenseSidebarContent = ({navigate,pathname,activeColor,inactiveColor,inac
               <ListItemText primary="Expense Categories" />
             </ListItem>
           </List>
-        </Collapse>
+        </Collapse> */}
     </>
   );
 };

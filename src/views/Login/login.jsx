@@ -1,9 +1,4 @@
 
-
-
-
-
-
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -22,6 +17,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const MySwal = withReactContent(Swal)
 function Copyright() {
   return (
@@ -76,6 +74,15 @@ export default function Login() {
       // console.log("response", response.data.user.role)
 
       if (response.status === 200) {
+        toast.success("login Successful ", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         const { token } = response.data;
         const { role, fullname } = response.data.user
         localStorage.setItem("accessToken", token);
@@ -152,11 +159,11 @@ export default function Login() {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
+            {/* <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item>
               <Link href="#/register" variant="body2">
                 {"Don't have an account? Sign Up"}
@@ -165,9 +172,11 @@ export default function Login() {
           </Grid>
         </form>
       </div>
-      <Box mt={8}>
+      {/* <Box mt={8}>
         <Copyright />
-      </Box>
+      </Box> */}
+
+      <ToastContainer />
     </Container>
   );
 }

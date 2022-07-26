@@ -21,7 +21,7 @@ const ProductSidebarContent = ({ navigate, pathname, activeColor, inactiveColor,
         <ListItemIcon>
           <ViewModuleIcon />
         </ListItemIcon>
-        <ListItemText primary="Products" />
+        <ListItemText primary="Animal" />
         {handleProductDropdownOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={openProductDropdown} timeout="auto" unmountOnExit>
@@ -36,11 +36,11 @@ const ProductSidebarContent = ({ navigate, pathname, activeColor, inactiveColor,
             <ListItemIcon>
               <ArrowRightAltIcon />
             </ListItemIcon>
-            <ListItemText primary="List" />
+            <ListItemText primary="Animal List" />
           </ListItem>
           {localStorage.getItem("role").toLowerCase() === "stockmanager" ? (<></>) : (
             <>
-              <ListItem
+              {/* <ListItem
                 button
                 style={{
                   backgroundColor: pathname === '/product/create' ? activeColor : inactiveColor,
@@ -51,8 +51,8 @@ const ProductSidebarContent = ({ navigate, pathname, activeColor, inactiveColor,
                   <ArrowRightAltIcon />
                 </ListItemIcon>
                 <ListItemText primary="Recipe List" />
-              </ListItem>
-              <ListItem
+              </ListItem> */}
+              {/* <ListItem
                 button
                 style={{
                   backgroundColor: pathname === '/product/variations' ? activeColor : inactiveColor,
@@ -63,8 +63,8 @@ const ProductSidebarContent = ({ navigate, pathname, activeColor, inactiveColor,
                   <ArrowRightAltIcon />
                 </ListItemIcon>
                 <ListItemText primary="Vat" />
-              </ListItem>
-              <ListItem
+              </ListItem> */}
+              {/* <ListItem
                 button
                 style={{
                   backgroundColor: pathname === '/product/units' ? activeColor : inactiveColor,
@@ -75,7 +75,7 @@ const ProductSidebarContent = ({ navigate, pathname, activeColor, inactiveColor,
                   <ArrowRightAltIcon />
                 </ListItemIcon>
                 <ListItemText primary="Units" />
-              </ListItem>
+              </ListItem> */}
               <ListItem
                 button
                 style={{
