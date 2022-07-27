@@ -1,0 +1,17 @@
+.purchase{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid red; */
+    width: 900px;
+}
+.purchase button{
+    width: 200px;
+    height: 40px;
+    background-color: rgb(255, 51, 0);
+    color: wheat;
+    border: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    padding: 10px 0px;
+}

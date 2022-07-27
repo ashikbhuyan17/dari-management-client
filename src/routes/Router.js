@@ -48,7 +48,7 @@ import GeneralItems from "../views/Inventory/Views/GeneralItems.jsx";
 import RawMaterialStockAdjustment from "../views/Stock-Adjustment/Views/RawMaterialStockAdjustment.jsx";
 import GeneralItemStockAdjustment from "../views/Stock-Adjustment/Views/GeneralItemStockAdjustment.jsx";
 import RawMaterialStockAdjustmentReport from "../views/Reports/Views/RawMaterialStockAdjustmentReport.jsx";
-import RawMaterialIncreaseStockReport from "../views/Reports/Views/RawMaterialIncreaseStockReport.jsx";
+import PurchaseReport from "../views/Reports/Views/PurchaseReport.jsx";
 import GeneralItemStockAdjustmentReport from "../views/Reports/Views/GeneralItemStockAdjustmentReport.jsx";
 import GeneralItemIncreaseStockAdjustmentReport from "../views/Reports/Views/GeneralItemIncreaseStockReport.jsx";
 import SalesDetails from "../views/Reports/Components/Sales Report/SalesDetails.jsx";
@@ -207,9 +207,9 @@ const ThemeRoutes = [
         element: <RawMaterialStockAdjustmentReport />,
       },
       {
-        path: "report/raw-material/increase",
+        path: "report/purchase",
         exact: true,
-        element: <RawMaterialIncreaseStockReport />,
+        element: <PurchaseReport />,
       },
       {
         path: "report/general-item/stock/adjustment",
