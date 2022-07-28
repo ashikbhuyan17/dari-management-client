@@ -64,6 +64,7 @@ import UserDetails from "../views/User Management/Components/UserDetails.jsx";
 import UserEditForm from "../views/User Management/Components/UserEditForm.jsx";
 import ItemSalesReport from "../views/Reports/Views/ItemSalesReport.jsx";
 import Register from "../views/Register/Register.js";
+import AnimalReport from "../views/Reports/Views/AnimalReport.jsx";
 
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout/FullLayout.js"));
@@ -210,6 +211,11 @@ const ThemeRoutes = [
         path: "report/purchase",
         exact: true,
         element: <PurchaseReport />,
+      },
+      {
+        path: "report/animal",
+        exact: true,
+        element: <AnimalReport />,
       },
       {
         path: "report/general-item/stock/adjustment",

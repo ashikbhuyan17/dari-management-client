@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { getAccessToken } from '../../../../HTTP/token';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,23 +13,43 @@ import { Typography } from '@material-ui/core';
 import './AnimalList.css'
 import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
+import { getAccessToken } from '../../../HTTP/token';
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+
 const MySwal = withReactContent(Swal)
 
-// import {
-//     Card,
-//     CardContent,
-//     Divider,
-//     Grid,
-//     TextField,
-//     Button,
-//     FormControl,
-//     InputLabel,
-//     Select,
-//     MenuItem,
-//     Alert,
-//   } from "@material-ui/core";
 
-const AnimalList = () => {
+
+const AnimalReport = () => {
+
+    const columns = [
+        { title: "Batch No", field: "batch_no", },
+        { title: "Id No", field: "id_no", },
+        { title: "Bio Flock Plant No", field: "bio_flock_plant_no" },
+        { title: "Category", field: 'category_name' },
+        { title: "Gender", field: 'gender' },
+        { title: "Color", field: 'color' },
+        { title: "Age", field: 'age' },
+        { title: "Quantity", field: 'quantity' },
+        { title: "Buying Price", field: 'buying_price' },
+        { title: "Selling Price", field: 'selling_price' },
+
+    ]
+
+
+    const downloadPdf = () => {
+        console.log("pdf", getAnimal)
+        const doc = new jsPDF()
+        doc.text("Student Details", 20, 10)
+        doc.autoTable({
+            theme: "grid",
+            columns: columns.map(col => ({ ...col, dataKey: col.field })),
+            body: getAnimal
+        })
+        doc.save('table.pdf')
+    }
+
     const [pageNum, setPageNum] = useState(0)
     const [numOfPages, setNumOfPages] = useState(0)
 
@@ -38,14 +57,13 @@ const AnimalList = () => {
     console.log('pages', pages);
     const [getAnimal, setGetAnimal] = useState()
     console.log("🚀 ~ file: AnimalList.js ~ line 40 ~ AnimalList ~ getAnimal", getAnimal)
-    console.log("🚀  getAnimal", getAnimal?.animal_picture)
 
     const getAnimalList = async () => {
         const response = await axios.get(`https://young-harbor-43911.herokuapp.com/api/animal/getAnimal?page=${pageNum}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
         if (response.status === 200) {
-            // setGetAnimal(response.data.animal)
             setGetAnimal(response?.data?.data)
 
+            // setGetAnimal(response.data.animal)
             setNumOfPages(response?.data?.totalPages)
         }
     }
@@ -85,9 +103,7 @@ const AnimalList = () => {
         const response = await axios.get(`https://young-harbor-43911.herokuapp.com/api/animal/getCategory/${categoryId}`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
         // console.log('getCategoryList', response);
         if (response.status === 200) {
-            // setGetAnimal(response.data.animal)
-            setGetAnimal(response?.data?.data)
-
+            setGetAnimal(response.data.animal)
 
         }
     }
@@ -133,26 +149,32 @@ const AnimalList = () => {
                 {/* category */}
 
                 <Grid item lg={6} md={6} sm={6} style={{ marginTop: '25px' }}>
-                    <FormControl fullWidth variant="outlined">
-                        <InputLabel id="demo-simple-select-outlined-label">
-                            Select Category
-                        </InputLabel>
-                        <Select
-                            labelId="demo-simple-select-outlined-label"
-                            // value={category}
-                            onChange={(event) => getCategoryList(event.target.value)}
-                            // onClick={getCategoryList}
-                            label="Select Category"
-                        >
-                            {productCategoryList?.map((category) => {
-                                return (
-                                    <MenuItem key={category.label} value={category.id}>
-                                        {category.value}
-                                    </MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </FormControl>
+                    <div className='generate'>
+                        <div className='form'>
+                            <FormControl fullWidth variant="outlined">
+                                <InputLabel id="demo-simple-select-outlined-label">
+                                    Select Category
+                                </InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    // value={category}
+                                    onChange={(event) => getCategoryList(event.target.value)}
+                                    // onClick={getCategoryList}
+                                    label="Select Category"
+                                >
+                                    {productCategoryList?.map((category) => {
+                                        return (
+                                            <MenuItem key={category.label} value={category.id}>
+                                                {category.value}
+                                            </MenuItem>
+                                        );
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </div>
+                        <div><button onClick={() => downloadPdf()}>pdf generate</button></div>
+                    </div>
+
                 </Grid>
             </Grid>
 
@@ -236,4 +258,4 @@ const AnimalList = () => {
     );
 };
 
-export default AnimalList;
+export default AnimalReport;

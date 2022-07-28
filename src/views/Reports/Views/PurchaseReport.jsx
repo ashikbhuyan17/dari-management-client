@@ -40,45 +40,13 @@ const RawMaterialIncreaseStockReport = () => {
 
   const getPurchase = async () => {
 
-    const response = await axios.get(`https://immense-badlands-33128.herokuapp.com/api/purchase/getPurchase?page=${pageNum}`);
+    const response = await axios.get(`https://young-harbor-43911.herokuapp.com/api/purchase/getPurchase?page=${pageNum}`);
     console.log(response.data?.purchaseData);
     setPurchaseList(response?.data?.purchaseData)
     setNumOfPages(response?.data?.totalPages)
 
   }
 
-
-  const studentData = [
-    {
-      id: 1,
-      name: "Neeraj",
-      email: "neeraj@gmail.com",
-      year: 2015,
-      fee: 167000,
-    },
-    {
-      id: 2,
-      name: "Vikas",
-      email: "vikas@gmail.com",
-      year: 2013,
-      fee: 785462,
-    },
-
-    {
-      id: 3,
-      name: "Rahul",
-      email: "rahul@gmail.com",
-      year: 2020,
-      fee: 784596,
-    }
-  ]
-
-
-  const column = [
-    { title: "Name", field: "name", },
-    { title: "Email", field: "email", },
-    { title: "Year", field: "year", type: "numeric" },
-    { title: "Fee", field: 'fee', type: "currency" }]
 
   const columns = [
     { title: "batch_no", field: "batch_no", },

@@ -89,7 +89,7 @@ const AddProductModal = ({
   // console.log('productCategoryList', productCategoryList)
   // const a = productCategoryList?.map(data => console.log(data.label))
   const getProductCategoryList = async () => {
-    const response = await axios.get(`https://immense-badlands-33128.herokuapp.com/api/category/getCategory`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
+    const response = await axios.get(`https://young-harbor-43911.herokuapp.com/api/category/getCategory`, { headers: { Authorization: `Bearer ${getAccessToken()}` } });
     // console.log("getProductCategoryList", response)
     if (response.status === 200) {
       // console.log(response.data.categoryList)

@@ -106,7 +106,7 @@ const AllProducts = () => {
       console.log('form data', formData)
 
 
-      const response = await axios.post(`https://immense-badlands-33128.herokuapp.com/api/animal/create`, formData, {
+      const response = await axios.post(`https://young-harbor-43911.herokuapp.com/api/animal/create`, formData, {
         headers: { Authorization: `Bearer ${getAccessToken()}` },
       });
       if (response.status === 201) {

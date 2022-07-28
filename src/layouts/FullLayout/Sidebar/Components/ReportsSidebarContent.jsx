@@ -41,16 +41,16 @@ const ReportsSidebarContent = ({ navigate, pathname, activeColor, inactiveColor,
           <ListItem
             button
             style={{
-              backgroundColor: pathname === '/report/raw-material/stock/adjustment' ? activeColor : inactiveColor,
-              color: pathname !== '/report/raw-material/stock/adjustment' ? inactiveTextColor : activeTextColor, paddingLeft: "4em"
+              backgroundColor: pathname === '/report/animal' ? activeColor : inactiveColor,
+              color: pathname !== '/report/animal' ? inactiveTextColor : activeTextColor, paddingLeft: "4em"
             }}
-            onClick={() => { return navigate('/report/raw-material/stock/adjustment') }}>
+            onClick={() => { return navigate('/report/animal') }}>
             <ListItemIcon>
               <ArrowRightAltIcon />
             </ListItemIcon>
-            <ListItemText primary="Raw Material Stock Adjustment" />
+            <ListItemText primary="Animal Report" />
           </ListItem>
-          <ListItem
+          {/* <ListItem
             button
             style={{
               backgroundColor: pathname === '/report/general-item/increase' ? activeColor : inactiveColor,
@@ -145,7 +145,7 @@ const ReportsSidebarContent = ({ navigate, pathname, activeColor, inactiveColor,
               <ArrowRightAltIcon />
             </ListItemIcon>
             <ListItemText primary="Activity Log" />
-          </ListItem>
+          </ListItem> */}
         </List>
       </Collapse>
     </>

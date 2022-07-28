@@ -1,0 +1,47 @@
+.paginationBtn{
+margin: 2px;
+padding: 12px;
+border: none;
+}
+.paginationBtn:hover{
+    border: 2px solid rgb(195, 171, 171);
+    background-color: rgb(224, 208, 238);
+    transition: 2s;
+}
+
+
+
+.preNext{
+    padding: 12px;
+    border: none;
+    margin:0 10px 0 10px;
+}
+
+.preNext:hover{
+    border: 2px solid rgb(195, 171, 171);
+    background-color: rgb(224, 208, 238);
+    transition: 2s;
+}
+
+
+.generate{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid red; */
+    width: 900px;
+}
+
+.generate .form {
+    width: 500px;
+}
+.generate button{
+    width: 200px;
+    height: 40px;
+    background-color: rgb(255, 51, 0);
+    color: wheat;
+    border: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    padding: 10px 0px;
+}
